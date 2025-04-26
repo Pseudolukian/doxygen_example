@@ -1,0 +1,23 @@
+/**
+@ingroup AllocatorGroup
+@fn AlignedAllocator::AlignedAllocator(std::size_t size, std::size_t alignment)
+@brief Constructor for the memory allocator.
+@param[in] size Total size of the memory pool in bytes.
+@param[in] alignment Required alignment (must be a power of 2).
+@throw std::bad_alloc Exception thrown if memory allocation fails.
+
+@details
+**Implementation of the allocator constructor**
+1. The constructor creates a memory pool of the specified size, aligned to the given boundary, using the `posix_memalign` function from the C standard library (`<cstdlib>`).
+2. The alignment must be a power of 2 (e.g., 16, 64 bytes) and at least the size of a pointer (`sizeof(void*)`). The constructor initializes internal pointers to manage the pool, preparing it for memory allocation via the @ref AlignedAllocator::allocate "allocate()" method.
+3. The constructor is declared with the `explicit` keyword, which prevents implicit type conversions, requiring explicit constructor calls. This protects against errors, such as accidentally creating an object from a single number (e.g., `AlignedAllocator alloc = 1024;`), which could result in an object with unpredictable parameters.
+4. Parameters `size` (pool size in bytes) and `alignment` (alignment in bytes) are passed to the initializer list, where they are assigned to class members `pool_size` and `alignment`. These members store the pool's configuration for subsequent use.
+5. A pointer `ptr` of type `void*` is declared to store the address of the allocated memory. The `void*` type is a generic pointer that can point to data of any type but does not support pointer arithmetic or dereferencing without casting to a specific type. It is suitable for functions like `posix_memalign`, which return a memory address without specifying its type.
+6. The `ptr` pointer is passed to the `posix_memalign` function, which returns a memory address without specifying its type and allocates a memory block of `size` bytes, aligned to the `alignment` boundary. The alignment must be a power of 2 and at least `sizeof(void*)`.
+7. The function returns `0` on successful memory allocation or an error code on failure (e.g., if there is insufficient memory). If allocation fails, a `std::bad_alloc` exception is thrown, signaling an allocation error.
+8. The `ptr` pointer (of type `void*`) is converted to a pointer of type `std::uint8_t*` using `reinterpret_cast`, as `void*` does not allow pointer arithmetic or data access.
+9. The `std::uint8_t` type is an 8-bit unsigned integer (byte), enabling memory to be treated as an array of bytes.
+10. The result is assigned to the class member `base`, which stores the starting address of the memory pool.
+11. The class member `current` (of type `std::uint8_t*`) is set to `base`. This initializes the current position in the memory pool, from which memory block allocations will begin in the @ref AlignedAllocator::allocate "allocate()" method.
+12. Initially, `current` points to the start of the pool.
+ */

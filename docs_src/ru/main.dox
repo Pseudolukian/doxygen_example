@@ -1,0 +1,13 @@
+/**
+@mainpage Main Page
+@brief Документация логгера и аллокатора пямяти.
+
+@section Allocator Аллокатор памяти
+@addtogroup AllocatorGroup
+
+@section Lock free queue Неблокируемая очередь
+@addtogroup Lock_free_queue_Group
+
+@section Logger Логгер
+@addtogroup Logger_Group
+*/

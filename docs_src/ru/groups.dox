@@ -1,0 +1,8 @@
+@defgroup AllocatorGroup Аллокатор памяти
+@brief Документация модуля Аллокатор памяти
+
+@defgroup Lock_free_queue_Group Неблокируемая очередь
+@brief Документация модуля неблокируемой очереди
+
+@defgroup Logger_Group Логгер
+@brief Документация модуля логгера

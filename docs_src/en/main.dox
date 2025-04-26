@@ -1,0 +1,13 @@
+/**
+@defgroup AllocatorGroup Allocator Module
+@brief Documentation for the Allocator module
+This group contains all classes, functions, and files related to the Allocator.
+
+
+@mainpage Main Page
+@brief Main documentation page
+
+@section allocator_section Allocator Module
+@addtogroup AllocatorGroup
+
+*/

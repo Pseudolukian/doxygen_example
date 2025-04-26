@@ -1,0 +1,16 @@
+/**
+@ingroup AllocatorGroup
+@class AlignedAllocator
+@brief Custom memory allocator with support for aligned memory allocation, safe boundaries, and automatic memory management.
+
+@details
+Key features of the allocator:
+- **Guaranteed memory alignment**: Utilizes the `posix_memalign` function to allocate memory aligned to a specified boundary (e.g., 16 or 64 bytes).
+- **Bit-level alignment**: The current address is rounded up, and lower bits are cleared using a bitmask (@ref AlignedAllocator::allocate "allocate()"). This ensures that the address of each allocated block is a multiple of the specified alignment.
+- **Fast memory allocation**: Avoids repeated system calls by managing a single pre-allocated pool. Aligned memory blocks are allocated quickly through pointer arithmetic (`(curr + alignment - 1) & ~(alignment - 1)`).
+- **Boundary safety**: Ensures safe memory allocation with checks in the @ref AlignedAllocator::allocate "allocate()" method to prevent memory overruns. If the requested size exceeds available memory, a `std::bad_alloc` exception is thrown.
+- **Automatic memory management**: Frees the entire pool in the destructor using `std::free`.
+- **Methods** of the AlignedAllocator class:
+      - @ref AlignedAllocator::allocate "allocate()" — memory allocation;
+      - @ref AlignedAllocator::reset "reset()" — pool reuse and automatic memory deallocation.
+ */

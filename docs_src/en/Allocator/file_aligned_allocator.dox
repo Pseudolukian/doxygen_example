@@ -1,0 +1,24 @@
+/**
+@ingroup AllocatorGroup
+@file /home/pynan/allocator/code_src/aligned_allocator.h
+@author Ivan Katkov (pynanist@gmail.com)
+@brief File includes the definition of the AlignedAllocator class.
+       This class provides a custom memory allocator that ensures the allocated memory is aligned
+       to a specified boundary. It uses posix_memalign for memory allocation and provides methods
+       for allocating and deallocating memory. The class also includes a reset method to reset
+       the allocator to its initial state.
+
+@details
+The AlignedAllocator class is designed to manage a pool of memory with a specific alignment.
+It allows for the allocation of memory blocks that are aligned to a specified boundary, which can
+be useful in scenarios where performance is critical, such as in graphics programming or systems
+programming. The class uses posix_memalign to allocate memory, which ensures that the allocated
+memory is aligned to the specified boundary. The allocate method returns a pointer to the aligned
+memory block, and the deallocate method frees the memory. The reset method resets the allocator
+to its initial state, allowing for reuse of the memory pool without having to reallocate it.
+
+@version 0.1
+@date 2025-04-25
+
+@copyright Copyright (c) 2025
+ */

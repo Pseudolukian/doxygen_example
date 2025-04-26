@@ -1,0 +1,39 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class AlignedAllocator {
+	+AlignedAllocator(std::size_t size, std::size_t alignment)
+	+~AlignedAllocator()
+	-alignment : std::size_t
+	-pool_size : std::size_t
+	-base : std::uint8_t*
+	-current : std::uint8_t*
+	+reset() : void
+	+allocate(std::size_t size) : void*
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml

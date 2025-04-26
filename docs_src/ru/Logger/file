@@ -1,0 +1,40 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class LogWriter {
+	+LogWriter(LogBuffer& buffer, const std::string& filename)
+	+~LogWriter()
+	-buffer : LogBuffer&
+	-level_to_string(LogLevel lvl) : char*
+	-shutdown_flag : std::atomic<bool>
+	-out : std::ofstream
+	-worker : std::thread
+	-run() : void
+	+shutdown() : void
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml
