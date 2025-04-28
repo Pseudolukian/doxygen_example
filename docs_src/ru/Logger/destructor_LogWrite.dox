@@ -1,0 +1,6 @@
+/**
+@ingroup Logger_Group
+@fn LogWriter::~LogWriter()
+@brief Деструктор класса LogWriter.
+@details Вызывает метод shutdown для завершения рабочего потока и корректного закрытия ресурсов.
+/*

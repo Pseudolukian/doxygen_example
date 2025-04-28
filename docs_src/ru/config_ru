@@ -1334,7 +1334,8 @@ HTML_FOOTER            =
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET        =
+HTML_STYLESHEET        = /home/pynan/allocator/docs_src/doxygen-awesome-css/doxygen-awesome.css
+                        
 
 # The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
 # cascading style sheets that are included after the standard style sheets
@@ -1375,7 +1376,7 @@ HTML_EXTRA_FILES       =
 # The default value is: AUTO_LIGHT.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_COLORSTYLE        = AUTO_LIGHT
+HTML_COLORSTYLE        = LIGHT
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
@@ -1683,7 +1684,7 @@ DISABLE_INDEX          = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # When both GENERATE_TREEVIEW and DISABLE_INDEX are set to YES, then the
 # FULL_SIDEBAR option determines if the side bar is limited to only the treeview
@@ -2737,17 +2738,17 @@ DIAFILE_DIRS           =
 # a preprocessing step. Doxygen will generate a warning when it encounters a
 # \startuml command in this case and will not generate output for the diagram.
 
-PLANTUML_JAR_PATH      =
+PLANTUML_JAR_PATH      = "/home/pynan/plantuml-1.2025.2.jar"
 
 # When using plantuml, the PLANTUML_CFG_FILE tag can be used to specify a
 # configuration file for plantuml.
 
-PLANTUML_CFG_FILE      =
+PLANTUML_CFG_FILE      = 
 
 # When using plantuml, the specified paths are searched for files specified by
 # the !include statement in a plantuml block.
 
-PLANTUML_INCLUDE_PATH  =
+PLANTUML_INCLUDE_PATH  = "/home/pynan/allocator/docs_src/ru"
 
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
 # that will be shown in the graph. If the number of nodes in a graph becomes

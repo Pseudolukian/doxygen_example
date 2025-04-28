@@ -1,0 +1,70 @@
+@startuml
+
+class AlignedAllocator {
+  - pool_size: size_t
+  - alignment: size_t
+  - base: uint8_t*
+  - current: uint8_t*
+  + AlignedAllocator(size: size_t, alignment: size_t)
+  + allocate(size: size_t): void*
+  + reset()
+  ~AlignedAllocator()
+}
+
+class LogEntry {
+  + timestamp: chrono::steady_clock::time_point
+  + thread_id: thread::id
+  + level: LogLevel
+  + message: char[256]
+  + LogEntry()
+  + LogEntry(lvl: LogLevel, msg: const char*)
+}
+
+enum LogLevel {
+  INFO
+  WARNING
+  ERROR
+}
+
+class "LockFreeQueue<T>" as LockFreeQueue {
+  - capacity: size_t
+  - allocator: AlignedAllocator&
+  - buffer: T**
+  - head: atomic<size_t>
+  - tail: atomic<size_t>
+  + LockFreeQueue(capacity: size_t, allocator: AlignedAllocator&)
+  + enqueue(item: T*): bool
+  + dequeue(): T*
+}
+
+class LogBuffer {
+  - allocator: AlignedAllocator&
+  - queue: LockFreeQueue<LogEntry>
+  - mutex: mutex
+  + LogBuffer(capacity: size_t, allocator: AlignedAllocator&)
+  + log(level: LogLevel, message: const char*): bool
+  + consume(): LogEntry*
+}
+
+class LogWriter {
+  - buffer: LogBuffer&
+  - shutdown_flag: atomic<bool>
+  - out: ofstream
+  - worker: thread
+  + LogWriter(buffer: LogBuffer&, filename: string)
+  + shutdown()
+  - run()
+  - level_to_string(lvl: LogLevel): const char*
+  ~LogWriter()
+}
+
+' Relationships
+LogBuffer *-- "queue" LockFreeQueue
+LockFreeQueue --> "allocator" AlignedAllocator
+LogBuffer --> "allocator" AlignedAllocator
+LogWriter --> "buffer" LogBuffer
+LogBuffer ..> LogEntry
+LogWriter ..> LogEntry
+LogEntry --> LogLevel
+
+@enduml

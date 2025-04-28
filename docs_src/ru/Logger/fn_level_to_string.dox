@@ -1,0 +1,14 @@
+/**
+@ingroup Logger_Group
+@fn const char* LogWriter::level_to_string(LogLevel lvl)
+@brief Преобразует уровень лога в строковое представление.
+
+@details 
+Преобразует `LogLevel` в строку: `INFO` для `LogLevel::INFO`, `WARNING` для `LogLevel::WARNING`, `ERROR` для `LogLevel::ERROR`, `UNKNOWN` для прочих значений. Используется в `run()` для форматирования логов.
+
+@param lvl Уровень лога (INFO, WARNING, ERROR).
+@return Константная C-строка ("INFO", "WARNING", "ERROR" или "UNKNOWN").
+
+@note Строки — это литералы, не требующие освобождения.
+@see LogWriter::run
+*/

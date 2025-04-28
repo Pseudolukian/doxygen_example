@@ -1,7 +1,4 @@
 /**
-@mainpage Main Page
-@brief Документация логгера и аллокатора пямяти.
-
 @section Allocator Аллокатор памяти
 @addtogroup AllocatorGroup
 
