@@ -35,4 +35,4 @@ jobs:
           doxygen_version: 1.9.8
         env:
           PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
-          OUTPUT_DIR_ENV: /home/runner/work/doxygen_example/doxygen_example/docs_output/ru/
+          OUTPUT_DIR_ENV: ./docs_output/ru/
