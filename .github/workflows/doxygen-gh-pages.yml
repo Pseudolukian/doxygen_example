@@ -21,11 +21,11 @@ jobs:
           echo "Current working directory:"
           pwd
           echo "Creating docs_output/ru directory..."
-          mkdir -p docs_output/ru
+          mkdir -p /home/runner/work/${{ github.repository }}/docs_output/ru
           echo "Directory contents after creation:"
-          ls -la
-          echo "Contents of docs_output:"
-          ls -la docs_output/
+          ls -la /home/runner/work/${{ github.repository }}/docs_output/
+          echo "Contents of docs_output/ru:"
+          ls -la /home/runner/work/${{ github.repository }}/docs_output/ru/
 
       - name: Run Doxygen with PlantUML
         uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
@@ -37,4 +37,4 @@ jobs:
           doxygen_version: 1.9.8
         env:
           PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
-          OUTPUT_DIR_ENV: ./docs_output/ru/
+          OUTPUT_DIR_ENV: /home/runner/work/${{ github.repository }}/docs_output/ru/
