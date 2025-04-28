@@ -1,0 +1,25 @@
+/**
+@fn void LogWriter::run()
+@brief Main log processing loop in the worker thread.
+
+@details 
+This method runs in the worker thread created by the LogWriter constructor and continuously processes log entries from the buffer until the shutdown flag is set. It performs the following operations:
+- Checks the atomic `shutdown_flag` using `std::memory_order_acquire`. If the flag is `true`, the loop terminates and the thread stops.
+- Calls `buffer.consume()` to retrieve a pointer to `LogEntry` from the lock-free queue. Returns `nullptr` if the queue is empty.
+- If a log entry (`LogEntry`) is obtained, formats it into a string with the pattern `[timestamp] [TID thread_id] [level] message\n`:
+  - `timestamp`: entry creation time in milliseconds since epoch.
+  - `thread_id`: ID of the thread that created the entry.
+  - `level`: string representation of the log level (INFO, WARNING, ERROR) obtained via `level_to_string()`.
+  - `message`: log message text.
+- Writes the formatted string to the file through `out` (std::ofstream), opened in append mode.
+- If the queue is empty (`consume()` returns `nullptr`), calls `std::this_thread::yield()` to yield control to other threads, minimizing CPU load.
+
+The method provides asynchronous and thread-safe log writing, using a lock-free queue for entry retrieval and atomic flag synchronization for shutdown.
+
+@note 
+- The method doesn't free memory allocated for `LogEntry`. Deallocation should be handled by an external mechanism (e.g., in `LogBuffer` or higher up the chain).
+- Using `std::memory_order_acquire` guarantees proper visibility of `shutdown_flag` changes made in the `shutdown()` method.
+
+@see LogWriter::shutdown
+@see LogBuffer::consume
+*/

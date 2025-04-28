@@ -1,0 +1,46 @@
+/**
+@fn LockFreeQueue::dequeue()
+@brief Retrieves a pointer to an element from the head of the queue.
+
+@details
+The `dequeue` method retrieves a pointer to an element from the head of the queue in a lock-free manner. The algorithm is thread-safe in a multithreaded environment due to the use of atomic operations and proper memory synchronization.
+
+The following steps are performed:
+
+1. Retrieve the current value of the `head` pointer using `std::memory_order_relaxed`, as strict synchronization is not required at this stage:
+   @code{.cpp}
+   auto current_head = head.load(std::memory_order_relaxed);
+   @endcode
+
+2. Check if the queue is empty.
+   Compare `current_head` with the current value of `tail`, obtained using `std::memory_order_acquire` to ensure visibility of all prior read operations:
+   @code{.cpp}
+   if (current_head == tail.load(std::memory_order_acquire)) {
+       return nullptr; // queue is empty
+   }
+   @endcode
+   If `current_head` equals `tail`, the queue is empty, and `nullptr` is returned.
+
+3. Extract the element from the buffer.
+   A pointer to an element of type `T` is read from the `buffer` array at the index `current_head`:
+   @code{.cpp}
+   T* item = buffer[current_head];
+   @endcode
+
+4. Update the `head` pointer.
+   The `head` value is atomically updated to the next position, accounting for the circular buffer, using `std::memory_order_release` to ensure that the element read operation is visible to other threads:
+   @code{.cpp}
+   head.store((current_head + 1) % capacity, std::memory_order_release);
+   @endcode
+
+5. Return the result.
+   The pointer to the retrieved element is returned:
+   @code{.cpp}
+   return item;
+   @endcode
+
+@note The caller is responsible for managing the lifetime of the object pointed to by the returned pointer. The object must remain valid until it is used.
+
+@tparam T The type of elements stored in the queue.
+@return A pointer to an element of type `T` if the queue is not empty, or `nullptr` if the queue is empty.
+*/

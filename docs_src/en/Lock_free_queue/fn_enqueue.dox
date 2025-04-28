@@ -1,0 +1,52 @@
+/**
+@fn LockFreeQueue::enqueue()
+@brief Adds a pointer to an element to the queue.
+
+@details
+The `enqueue` method adds a pointer to an element of type `T` to the tail of the queue in a lock-free manner. The algorithm is thread-safe in a multithreaded environment due to the use of atomic operations and proper memory synchronization.
+
+The following steps are performed:
+
+1. Retrieve the current value of the `tail` index using `std::memory_order_relaxed`, as strict synchronization is not required at this stage:
+   @code{.cpp}
+   auto current_tail = tail.load(std::memory_order_relaxed);
+   @endcode
+
+2. Calculate the next `tail` value, accounting for the circular buffer:
+   @code{.cpp}
+   auto next_tail = (current_tail + 1) % capacity;
+   @endcode
+
+3. Compare `next_tail` with the current value of `head`, obtained using `std::memory_order_acquire` to ensure visibility of all prior read operations:
+   @code{.cpp}
+   if (next_tail == head.load(std::memory_order_acquire)) {
+       return false; // queue is full
+   }
+   @endcode
+   If `next_tail` equals `head`, the queue is full, and the element cannot be added.
+
+4. Add the element to the buffer.
+   The `item` pointer is written to the `buffer` array at the index `current_tail`:
+   @code{.cpp}
+   buffer[current_tail] = item;
+   @endcode
+
+5. Update the `tail` pointer.
+   The `tail` value is atomically updated to `next_tail` using `std::memory_order_release` to ensure that all prior write operations (including adding `item`) are visible to other threads:
+   @code{.cpp}
+   tail.store(next_tail, std::memory_order_release);
+   @endcode
+
+6. Return the result.
+   Returns `true`, indicating successful addition of the element:
+   @code{.cpp}
+   return true;
+   @endcode
+
+@note The method assumes that the `item` pointer points to a valid object created and managed outside the queue. 
+The lifetime of the `T` object must be ensured by the caller until it is retrieved via `dequeue`.
+
+@tparam T The type of elements stored in the queue.
+@param [in] item A pointer to an element of type `T` to be added to the queue.
+@return `true` if the element was successfully added, `false` if the queue is full.
+*/

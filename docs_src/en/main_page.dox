@@ -1,0 +1,30 @@
+/**
+@mainpage Memory Allocator, Lock-Free Queue and Logger Documentation
+@brief
+The system consists of three components:
+- **Memory Allocator**: Provides aligned memory allocation.
+- **Lock-Free Queue**: Enables threads to exchange data safely without using locks.
+- **Logger**: Collects messages from various threads via a buffer and writes them to a file in a separate thread.
+
+The components interact as follows:
+- The memory allocator is used to allocate memory for queue elements and log buffer.
+- The lock-free queue is used in the log buffer to store messages sent by threads.
+- The logger consumes messages from the buffer and writes them to a file.
+
+For a more detailed understanding of component interaction, please refer to the PlantUML diagram:
+
+@startuml
+!include ./scheme.puml!0
+@enduml
+
+@section sec_1 System Components
+
+@subsection sec_1_1 Memory Allocator
+The memory allocator (`AlignedAllocator`) allocates memory with specified alignment, helping to avoid cache line issues in multithreaded applications. It manages a memory pool allocated during creation and provides methods for memory allocation and deallocation.
+
+@subsection sec_1_2 Lock-Free Queue
+The lock-free queue (`LockFreeQueue`) allows threads to enqueue and dequeue elements without using locks. This is achieved through atomic operations and careful management of head and tail indices.
+
+@subsection sec_1_3 Logger
+The logger (`LogWriter`) uses a log buffer (`LogBuffer`) which in turn employs a lock-free queue to store messages. The logger operates in a separate thread, consuming messages from the buffer and writing them to a file.
+*/

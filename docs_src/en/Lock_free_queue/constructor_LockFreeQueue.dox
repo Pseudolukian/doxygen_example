@@ -1,0 +1,24 @@
+/**
+@fn explicit LockFreeQueue::LockFreeQueue(std::size_t capacity, AlignedAllocator& allocator)
+@brief Constructor for the lock-free queue class.
+
+@details
+The constructor initializes a lock-free queue capable of accepting pointers to elements of type `T` via the `enqueue` method and retrieving them via the `dequeue` method. Atomic variables `head` and `tail` ensure safe operation in a multithreaded environment without locks.
+
+Memory is allocated for an array of pointers `buffer` of size `capacity` using the provided allocator:
+
+@code
+buffer = reinterpret_cast<T**>(allocator.allocate(sizeof(T*) * capacity));
+@endcode
+
+All elements of the `buffer` array are initialized to `nullptr`, indicating an empty queue:
+
+@code
+for (size_t i = 0; i < capacity; ++i) {
+    buffer[i] = nullptr;
+}
+@endcode
+
+@param [in] capacity The size of the queue.
+@param [in] allocator The allocator used for memory allocation.
+*/

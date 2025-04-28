@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @fn LogWriter::shutdown()
 @brief Завершает работу рабочего потока и останавливает обработку логов.
 

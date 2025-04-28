@@ -1,0 +1,5 @@
+/**
+@fn LogWriter::~LogWriter()
+@brief Destructor of the LogWriter class.
+@details Calls the shutdown method to stop the worker thread and properly release resources.
+*/

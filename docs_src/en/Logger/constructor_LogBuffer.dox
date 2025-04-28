@@ -1,0 +1,22 @@
+/**
+@fn LogBuffer::LogBuffer(std::size_t capacity, AlignedAllocator& allocator)
+@brief Constructor for the LogBuffer class.
+@details Initializes the buffer with the specified queue capacity and a reference to the allocator. Uses an initializer list to set up the class members.
+
+@param [in] capacity The capacity of the queue for storing log entries.
+@param [in] allocator Reference to the aligned memory allocator.
+
+@var LogBuffer::allocator
+Initializes the `allocator` member with a reference to the provided allocator.
+Used for allocating memory for log entries (`LogEntry` objects).
+
+@var LogBuffer::queue
+Initializes the queue with the specified capacity and allocator.
+Ensures thread-safe addition and retrieval of log entries.
+
+@var LogBuffer::mutex
+Mutex for serializing memory allocation.
+Ensures thread safety when calling the allocator's `allocate` method.
+
+
+*/

@@ -1,6 +1,4 @@
 /**
-@ingroup Logger_Group
-@private
 @fn void LogWriter::run()
 @brief Основной цикл обработки логов в рабочем потоке.
 

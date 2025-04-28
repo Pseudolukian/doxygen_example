@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @fn LogBuffer::log(LogLevel level, const char* message)
 @brief Добавляет запись лога в очередь.
 

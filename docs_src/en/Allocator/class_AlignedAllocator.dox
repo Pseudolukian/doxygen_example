@@ -1,0 +1,25 @@
+/**
+@class AlignedAllocator
+@brief A custom memory allocator with support for aligned memory allocation, safe boundaries, and automatic memory management.
+
+@details
+## Key Features of the Allocator
+- **Guaranteed Memory Alignment** — Utilizes the `posix_memalign` function to allocate memory aligned to a specified boundary (e.g., 16 or 64 bytes).
+- **Bitwise Alignment** — The current address is rounded up, and lower bits are cleared using a bitwise mask (@ref AlignedAllocator::allocate "allocate()"). This ensures that the address of each allocated block is a multiple of the specified alignment.
+- **Fast Memory Allocation** without repeated system calls by managing a single pre-allocated pool. Aligned memory blocks are allocated quickly using pointer arithmetic (`(curr + alignment - 1) & ~(alignment - 1)`).
+- **Boundary Safety** of allocated memory is ensured by checks in the @ref AlignedAllocator::allocate "allocate()" method. If the requested size exceeds available memory, a `std::bad_alloc` exception is thrown.
+- **Automatic Memory Management** — Frees the entire pool using `std::free`.
+- **Methods** of the `AlignedAllocator` class:
+      - @ref AlignedAllocator::allocate "allocate()" — Allocates memory;
+      - @ref AlignedAllocator::reset "reset()" — Reuses the pool and automatically frees memory.
+
+@private
+@var AlignedAllocator::pool_size 
+The size of the memory pool in bytes.
+@var AlignedAllocator::alignment
+The alignment of the memory pool in bytes.
+@var AlignedAllocator::base
+Pointer to the start of the memory pool.
+@var AlignedAllocator::current
+Pointer to the current position in the memory pool.
+*/

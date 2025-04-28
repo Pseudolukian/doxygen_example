@@ -1,0 +1,13 @@
+/**
+@fn const char* LogWriter::level_to_string(LogLevel lvl)
+@brief Converts a log level to its string representation.
+
+@details 
+Converts `LogLevel` to a string: `INFO` for `LogLevel::INFO`, `WARNING` for `LogLevel::WARNING`, `ERROR` for `LogLevel::ERROR`, and `UNKNOWN` for other values. Used in `run()` for log formatting.
+
+@param lvl Log level (INFO, WARNING, ERROR).
+@return Constant C-string ("INFO", "WARNING", "ERROR", or "UNKNOWN").
+
+@note The strings are literals and don't require deallocation.
+@see LogWriter::run
+*/

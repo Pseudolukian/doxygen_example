@@ -1,0 +1,20 @@
+/**
+@class LockFreeQueue
+@brief A class implementing a lock-free queue.
+@details
+The `LockFreeQueue` class implements a lock-free queue using atomic operations and an allocator. It enables safe addition and removal of elements from the queue in a multithreaded environment without locks, improving performance and reducing the likelihood of deadlocks.
+
+@tparam T The type of elements stored in the queue.
+
+@var LockFreeQueue::capacity
+The maximum number of elements in the queue.
+
+@var LockFreeQueue::allocator
+The allocator used to allocate memory for the array of pointers to elements of type `T`.
+
+@var LockFreeQueue::head
+A pointer to the head of the queue.
+
+@var LockFreeQueue::tail
+A pointer to the tail of the queue.
+*/

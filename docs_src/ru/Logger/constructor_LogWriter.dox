@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @fn LogWriter::LogWriter(LogBuffer& buffer, const std::string& filename)
 @brief Конструктор класса LogWriter.
 @details

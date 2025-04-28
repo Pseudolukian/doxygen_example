@@ -1,0 +1,24 @@
+/**
+@struct LogEntry
+@brief
+Structure (aligned to 64 bytes) for storing log entries with timestamp, thread ID, log level, and message.
+
+@details
+The LogEntry structure is used to create log file entries in the following format:
+@code{text}
+[21961115] [TID 139925989566144] [INFO] Log message from producer thread
+...
+@endcode
+
+@var LogEntry::timestamp
+Event timestamp recorded when the entry is created. Uses std::chrono::steady_clock to ensure monotonic time.
+
+@var LogEntry::thread_id
+ID of the thread where the entry was created. Uses std::thread::id for unique thread identification.
+
+@var LogEntry::level
+Logging level (INFO, WARNING, ERROR). Uses the LogLevel enumeration to define message severity.
+
+@var LogEntry::message
+Fixed-length character array (256 bytes) for storing the message text. Uses std::strncpy for safe string copying and guarantees null termination.
+*/

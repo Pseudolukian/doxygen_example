@@ -1,0 +1,23 @@
+/**
+@class LogWriter
+@brief A class for asynchronous logging to a file.
+
+@details
+The `LogWriter` class enables asynchronous saving of log entries retrieved from `LogBuffer` to a specified file. It spawns a dedicated worker thread to process log entries, formats them into a readable form, and writes them to the file. The class supports graceful shutdown via the `shutdown` method and automatically terminates the thread upon object destruction.
+
+@var LogWriter::buffer
+@brief Reference to the log buffer.
+@details Used to retrieve log entries (`LogEntry` objects) via the `consume` method. Initialized in the constructor with a reference to the provided `LogBuffer`.
+
+@var LogWriter::shutdown_flag
+@brief Atomic flag for controlling the termination of the worker thread.
+@details Set to `true` to stop the log processing loop in the `run` method. Uses memory order operations (`memory_order_acquire`/`release`) for thread safety.
+
+@var LogWriter::out
+@brief Output stream for writing logs to a file.
+@details Represents an open file for appending formatted log entries. Initialized in the constructor with the specified file name.
+
+@var LogWriter::worker
+@brief Worker thread for asynchronous log processing.
+@details Started in the constructor and executes the `run` method to process log entries. Terminates upon calling `shutdown` or in the destructor.
+*/

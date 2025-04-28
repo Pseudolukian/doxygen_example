@@ -1,0 +1,41 @@
+/**
+@fn LogBuffer::log(LogLevel level, const char* message)
+@brief Adds a log entry to the queue.
+
+@details
+Creates a new log entry with the specified level and message, allocating memory through an allocator, and adds it to the queue. Memory allocation is protected by a mutex.
+
+First, a lock is created: `std::lock_guard<std::mutex> guard(mutex);` This ensures serialized access to the `allocator` since it's not thread-safe. The lock is held until the end of the method scope (until log completes), guaranteeing that only one thread can perform memory allocation at a time.
+
+Next, a memory pointer is initialized: `void* mem = nullptr;`. This pointer will store the address of memory allocated for the `LogEntry` object.
+
+In the try block:
+@code{c++}
+try {
+    mem = allocator.allocate(sizeof(LogEntry));
+} catch (const std::bad_alloc&) {
+    return false;
+}
+@endcode
+
+the `allocator.allocate` method attempts to allocate memory of size `sizeof(LogEntry)` (the size of the `LogEntry` structure, aligned to 64 bytes as specified in `log_entry.h`). If successful, `mem` receives the address of the allocated memory block. If `allocator.allocate` throws a std::bad_alloc exception (e.g., due to insufficient memory in the allocator pool), it's caught in the catch block.
+
+In this case, the `log` method immediately returns `false`, indicating the log entry failed due to memory allocation failure. The mutex lock is automatically released when the method exits (std::lock_guard destructor).
+
+If memory is successfully allocated, placement new is used to construct the LogEntry object at address mem:
+@code{c++}
+LogEntry* entry = new (mem) LogEntry(level, message);
+@endcode
+
+Finally, the `queue.enqueue(entry)` method is called, where `queue` is an instance of `LockFreeQueue<LogEntry>`. The `enqueue` method attempts to add the `entry` pointer to the queue without using locks (lock-free implementation).
+enqueue returns:
+- `true` if the entry was successfully added to the queue (space available)
+- `false` if the queue is full (`next_tail == head` condition in lock_free_queue.h)
+
+The `enqueue` result is directly returned from the log method via `return queue.enqueue(entry);`. The mutex is automatically released afterward (std::lock_guard destructor).
+
+@par [in] level Logging level (INFO, WARNING, ERROR).
+@par [in] message Log text message (C-string).
+@return true if entry was added successfully; false if memory allocation failed or queue is full.
+@throw bad_alloc If memory allocation for the new log entry fails.
+*/

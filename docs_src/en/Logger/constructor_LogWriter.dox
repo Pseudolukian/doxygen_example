@@ -1,0 +1,17 @@
+/**
+@fn LogWriter::LogWriter(LogBuffer& buffer, const std::string& filename)
+@brief Constructor of the LogWriter class.
+@details
+The constructor initializes a `LogWriter` object for asynchronous log writing from a buffer to the specified file. It performs the following actions:
+- Stores a reference to the provided `LogBuffer` object in the member `buffer` for subsequent log entry extraction.
+- Initializes the shutdown flag `shutdown_flag` with `false`, indicating that log processing is active.
+- Opens the file named `filename` in append mode (std::ios::out | std::ios::app) via the member `out` (std::ofstream).
+- If the file fails to open, throws a std::runtime_error with the message "Failed to open log file".
+- Starts a worker thread (`worker`) that executes the `run()` method for asynchronous processing of log entries from the buffer.
+@par [in] buffer Reference to the LogBuffer object from which log entries will be extracted.
+@par [in] filename Name of the file where logs will be written.
+@var LogWriter::LogWriter::buffer Initializes the member `buffer` with a reference to the provided LogBuffer.
+@var LogWriter::LogWriter::shutdown_flag Initializes the shutdown flag with `false`.
+@var LogWriter::LogWriter::out Opens the file for writing in append mode.
+@throws std::runtime_error If the file named `filename` cannot be opened for writing.
+*/

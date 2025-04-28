@@ -1,0 +1,24 @@
+/**
+@fn AlignedAllocator::AlignedAllocator(std::size_t size, std::size_t alignment)
+@brief Memory allocator constructor.
+
+@details
+
+The constructor creates a memory pool of a specified size, aligned to the given boundary (alignment must be a power of two: 16, 64 bytes, etc.), using the `posix_memalign` function from the standard library `<cstdlib>`.
+
+The parameters `size` (pool size in bytes) and `alignment` (alignment in bytes) are passed to the initialization list, where they are assigned to the class members `pool_size` and `alignment`. These members store the pool configuration for subsequent use.
+
+The `AlignedAllocator` constructor is declared with the `explicit` keyword to prevent implicit type conversions. Code such as `AlignedAllocator allocator(1024);` will result in a compilation error (`no matching function for call to ‘AlignedAllocator::AlignedAllocator(int)’`) and will not create an object with unpredictable behavior.
+
+A pointer `ptr` of type `void*` (`void* ptr = nullptr;`) is defined to store the address of the allocated memory. It is then passed to the `posix_memalign` function (`posix_memalign(&ptr, alignment, size) != 0`), which returns a typeless memory address and allocates a memory block of `size` bytes, aligned to the `alignment` boundary. The alignment must be a power of two and at least `sizeof(void*)`.
+
+The function returns `0` on successful memory allocation or an error code on failure (e.g., if there is insufficient memory). If the allocation fails, a `std::bad_alloc` exception is thrown to signal the allocation error.
+
+The `ptr` pointer (of type `void*`) is converted to a pointer of type `std::uint8_t*` using `reinterpret_cast` (`base = reinterpret_cast<std::uint8_t*>(ptr);`), as `void*` does not support pointer arithmetic or data access. The `std::uint8_t` type is an 8-bit unsigned integer type (byte), allowing the memory to be treated as an array of bytes.
+
+Finally, the class member `current` (of type `std::uint8_t*`) is set equal to `base` (`current = base;`). This initializes the current position in the memory pool, from which block allocation will begin in the @ref AlignedAllocator::allocate "allocate()" method.
+
+@param[in] size Total size of the memory pool in bytes.
+@param[in] alignment Required alignment (must be a power of two).
+@throw std::bad_alloc Exception thrown if memory allocation fails.
+*/

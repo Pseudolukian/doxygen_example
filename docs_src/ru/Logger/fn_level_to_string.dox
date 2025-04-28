@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @fn const char* LogWriter::level_to_string(LogLevel lvl)
 @brief Преобразует уровень лога в строковое представление.
 

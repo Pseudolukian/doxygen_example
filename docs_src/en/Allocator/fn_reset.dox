@@ -1,0 +1,12 @@
+/**
+@fn AlignedAllocator::reset()
+@brief Resets the allocator to its initial state.
+
+@details
+The method resets the current position in the memory pool to its beginning, setting the `current` pointer back to the value of `base`. This allows the allocator to start allocating memory anew, as if the pool had just been created. All previously allocated memory blocks obtained through @ref AlignedAllocator::allocate "allocate()" become invalid, as subsequent calls to `allocate` may overwrite their contents.
+
+After calling `reset`, subsequent calls to `allocate()` will begin allocating memory from the start of the pool (`base`), ignoring previously allocated blocks. This differs from the destructor (`~AlignedAllocator()`), which frees the memory using `std::free`.
+
+@warning
+All pointers returned by previous calls to `allocate` become invalid, as new allocations may overwrite their contents. Attempting to access such pointers will lead to undefined behavior (e.g., reading incorrect data or program crashes). The method does not throw exceptions, as it performs a simple pointer assignment and requires no additional checks, since `base` is guaranteed to be set in the constructor.
+*/

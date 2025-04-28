@@ -12,8 +12,14 @@ permissions:
     pull-requests: write      
 
 env:
-  DOXYGEN_OUTPUT: docs_output/ru
-  PLANTUML_JAR: plantuml-1.2025.2.jar    
+  DOXYGEN_OUTPUT: docs_output
+  DOXYGEN_OUTPUT_RU: docs_output/ru
+  DOXYGEN_OUTPUT_EN: docs_output/en
+  PLANTUML_JAR: plantuml-1.2025.2.jar
+  INPUT_DIR_RU: .docs_src/ru  
+  INPUT_DIR_EN: .docs_src/en
+  LOCALE_EN: ENGLISH
+  LOCALE_RU: RUSSIAN
 
 jobs:
   deploy:
@@ -34,23 +40,56 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get install -y doxygen
       
-      - name: Create output directory
-        run: mkdir -p ${{ env.DOXYGEN_OUTPUT }}
       
-      - name: Create .nojekyll file
+      - name: Create output directories
         run: |
-          mkdir -p ${{ env.DOXYGEN_OUTPUT }}/html
-          touch ${{ env.DOXYGEN_OUTPUT }}/html/.nojekyll
-
-      - name: Check folder structure
-        run: ls -la
+          mkdir -p ${{ env.DOXYGEN_OUTPUT_RU }}/html
+          mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}/html
       
-      - name: Generate Doxygen documentation
+      - name: Create .nojekyll files
+        run: |
+          touch ${{ env.DOXYGEN_OUTPUT }}/html/.nojekyll
+          touch ${{ env.DOXYGEN_OUTPUT_RU }}/html/.nojekyll
+          touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
+
+      - name: Create output directory EN
+        run: mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}  
+        
+      - name: Create .nojekyll file for RU
+        run: |
+          mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}/html
+          touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
+      
+      - name: Generate Doxygen RU documentation
         run: doxygen config_gh
         env:
-          OUTPUT_DIR_ENV: ${{ env.DOXYGEN_OUTPUT }}
+          OUTPUT_DIR_ENV: ${{ env.DOXYGEN_OUTPUT_RU }}
           PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
+          INPUT_DIR: ${{ env.INPUT_DIR_RU }}
+          LOCALE: ${{ env.LOCALE_RU }}
       
+      - name: Generate Doxygen EN documentation
+        run: doxygen config_gh
+        env:
+          OUTPUT_DIR_ENV: ${{ env.DOXYGEN_OUTPUT_EN }}
+          PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
+          INPUT_DIR: ${{ env.INPUT_DIR_EN }}
+          LOCALE: ${{ env.LOCALE_EN }}
+      
+      - name: Create index.html for language selection
+        run: |
+          cat > ${{ env.DOXYGEN_OUTPUT }}/index.html <<EOF
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <meta http-equiv="refresh" content="0; url=/doxygen/ru/" />
+          </head>
+          <body>
+              <p>Redirecting to Russian documentation...</p>
+          </body>
+          </html>
+          EOF     
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

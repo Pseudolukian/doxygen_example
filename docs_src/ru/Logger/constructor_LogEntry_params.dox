@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @fn LogEntry::LogEntry(LogLevel lvl, const char* msg) 
 @brief Параметризованный конструктор.
 @param lvl Уровень логирования (INFO, WARNING, ERROR).
@@ -13,7 +12,6 @@
 
 @var LogEntry::LogEntry::level Уровень логирования записи.
 Указывает важность события (INFO, WARNING, ERROR), заданную при создании записи.
-
 
 @details 
 Инициализирует все поля структуры:

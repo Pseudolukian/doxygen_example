@@ -1,0 +1,52 @@
+/**
+@fn AlignedAllocator::allocate()
+@brief Allocates a memory block from the pool.
+
+@details
+Local variables:
+- curr -- pointer to the current position in the memory pool;
+- aligned -- the next aligned address in memory;
+- aligned_ptr -- pointer to the aligned address in memory;
+- current -- pointer to the current position in the memory pool.
+
+The method @ref AlignedAllocator::allocate(std::size_t size) allocates a memory block from the pool, ensuring that the returned pointer is aligned to the boundary specified by the `alignment` parameter of the constructor. Subsequent allocations also maintain proper alignment. The method performs pointer arithmetic and bitwise operations to compute the aligned address, checks pool boundaries, and updates the current position for future allocations.
+
+The method returns a generic `void*` pointer, which can point to data of any type. This allows the calling code to cast the pointer to the desired type (e.g., `int*` or `float*`), providing flexibility.
+
+The `current` pointer (of type `std::uint8_t*`), which points to the current position in the memory pool, is converted to an integer of type `std::uintptr_t` using `reinterpret_cast` (since pointers (`std::uint8_t*`) cannot be directly used for bitwise operations):
+@code{c++}
+std::uintptr_t curr = reinterpret_cast<std::uintptr_t>(current);
+@endcode
+
+This conversion enables arithmetic and bitwise operations on the memory address. The `std::uintptr_t` type ensures that the pointer address can be safely stored and manipulated as a number.
+
+The expression `std::uintptr_t aligned = (curr + alignment - 1) & ~(alignment - 1);` calculates the next aligned memory address, which is a multiple of `alignment`.
+
+This is achieved in two steps:
+- `curr + alignment - 1` — rounds the current address upward by adding `alignment - 1`. This ensures the result is at least the next alignment boundary. For example, if `curr = 100` and `alignment = 16`, then `100 + 16 - 1 = 115`.
+- `~(alignment - 1)` — creates a bitwise mask to clear the lower bits of the address. For example, for `alignment = 16` (binary `10000`), `alignment - 1 = 15` (binary `01111`), and `~(alignment - 1) = ~01111 = 11110000` (hexadecimal `0xFFFFFFF0` for 32 bits). This mask clears the lower bits corresponding to the alignment value.
+- The bitwise `&` operation applies the mask to the rounded address, clearing the lower bits to obtain an address that is a multiple of `alignment`. For the example above: `115 & 0xFFFFFFF0 = 112` (binary `1110000`), which is a multiple of 16.
+
+Address alignment is necessary to ensure the returned pointer meets the `alignment` requirements (e.g., 16 or 64 bytes), which is critical for optimizations (e.g., SIMD instructions) or hardware requirements.
+
+The `aligned` variable now contains the numerical value of the aligned address, which is then converted back to a pointer of type `std::uint8_t*` using `reinterpret_cast`. This allows it to be used for memory access:
+@code{c++}
+std::uint8_t* aligned_ptr = reinterpret_cast<std::uint8_t*>(aligned);
+@endcode
+
+At the step `if (aligned_ptr + size > base + pool_size) { throw std::bad_alloc(); }`, the method checks whether the requested memory block of size `size`, starting at the aligned address `aligned_ptr`, fits within the memory pool.
+
+**Logic**:
+- The expression `aligned_ptr + size` calculates the address following the end of the requested block (the end of the allocated segment).
+- The expression `base + pool_size` determines the end of the memory pool, where `base` is the starting address of the pool, and `pool_size` is its total size.
+- If `aligned_ptr + size` exceeds `base + pool_size`, allocation is not possible, as the block would extend beyond the pool's boundaries.
+
+This check prevents pool overflow, ensuring the allocator does not allocate memory beyond the available space. If allocation is not possible, a `std::bad_alloc` exception is thrown, signaling to the calling code that there is insufficient memory.
+
+At the step `current = aligned_ptr + size;`, the `current` pointer is updated to point to the address following the allocated block (`aligned_ptr + size`). This advances the current position in the pool, preparing it for the next call to `allocate`. Updating `current` tracks which portion of the pool has been allocated, allowing the allocator to sequentially distribute memory without overlaps.
+
+@param[in] size Requested block size in bytes.
+@throw std::bad_alloc Exception thrown if the requested memory size exceeds the pool's capacity.
+@return
+The `aligned_ptr` pointer (of type `std::uint8_t*`), cast to `void*` as per the function signature. Returning a `void*` ensures versatility, allowing the calling code to cast the pointer to any desired type (e.g., `double*` or `struct MyType*`).
+*/

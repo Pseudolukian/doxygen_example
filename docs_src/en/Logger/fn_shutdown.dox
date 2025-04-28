@@ -1,0 +1,17 @@
+/**
+@fn LogWriter::shutdown()
+@brief Stops the worker thread and terminates log processing.
+
+@details 
+This method initiates proper shutdown of the LogWriter object. It performs the following operations:
+- Sets the atomic `shutdown_flag` to `true` using `std::memory_order_release` to signal the worker thread to stop.
+- Checks if the worker thread (`worker`) is joinable to avoid attempting to join an inactive thread.
+- If the thread is joinable, calls `worker.join()` to wait for completion of the `run()` method in the worker thread.
+The method ensures safe termination of asynchronous log processing, allowing the thread to properly handle remaining entries before stopping.
+
+@note 
+- This method must be called before destroying the LogWriter object to avoid undefined behavior when terminating an active thread.
+- Using `std::memory_order_release` guarantees that all write operations to `shutdown_flag` are visible to the worker thread before it stops.
+
+@see LogWriter::LogWriter
+*/

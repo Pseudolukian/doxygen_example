@@ -1,0 +1,6 @@
+/**
+@fn LogBuffer::consume()
+@brief Retrieves a log entry from the queue.
+@details Returns a pointer to a log entry while removing it from the queue. Returns nullptr if the queue is empty.
+@return Pointer to `LogEntry` or `nullptr` if the queue is empty.
+*/

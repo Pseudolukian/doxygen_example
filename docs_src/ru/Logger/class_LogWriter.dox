@@ -1,5 +1,4 @@
 /**
-@ingroup Logger_Group
 @class LogWriter
 @brief Класс для асинхронной записи логов в файл.
 

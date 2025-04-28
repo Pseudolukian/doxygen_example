@@ -1,0 +1,7 @@
+/**
+@fn LogEntry::LogEntry()
+@brief Default constructor.
+
+@details
+The default constructor is necessary for initializing the structure in containers, arrays, or other data structures where object creation without parameters is required. The structure's fields remain uninitialized, assuming subsequent explicit initialization or the use of a parameterized constructor.
+*/

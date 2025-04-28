@@ -1,0 +1,27 @@
+/**
+@fn LogEntry::LogEntry(LogLevel lvl, const char* msg)
+@brief Parameterized constructor.
+@param lvl Logging level (INFO, WARNING, ERROR).
+@param msg Message to be logged. Must be a string not exceeding 256 characters.
+
+@var LogEntry::timestamp Timestamp of the log entry creation.
+Contains the creation time of the entry, obtained via `std::chrono::steady_clock::now()`. Used to track the moment of the event.
+
+@var LogEntry::thread_id Identifier of the thread that created the log entry.
+Stores the ID of the current thread, obtained via `std::this_thread::get_id()`. Allows distinguishing entries from different threads.
+
+@var LogEntry::level Logging level of the entry.
+Indicates the severity of the event (INFO, WARNING, ERROR), specified during entry creation.
+
+@details
+Initializes all fields of the structure:
+- Sets `timestamp` to the current time using `std::chrono::steady_clock::now()`.
+- Captures `thread_id` of the current thread via `std::this_thread::get_id()`.
+- Assigns `level` the provided value from the `LogLevel` enumeration.
+- Copies the provided `msg` into the `message` field using `std::strncpy`.
+
+@note The `message` field is limited to 256 characters. If the provided message is longer, it will be truncated.
+For messages exceeding this length, alternative logging mechanisms are recommended.
+
+@warning In multithreaded applications, access to a shared log storage must be synchronized, as the structure itself does not provide built-in synchronization mechanisms.
+*/

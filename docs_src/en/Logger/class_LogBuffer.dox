@@ -1,0 +1,19 @@
+/**
+@class LogBuffer
+@brief A thread-safe buffer for logging using a lock-free queue.
+
+@details 
+The `LogBuffer` class provides a mechanism for thread-safe logging of messages. It utilizes a lock-free queue to store log entries and an aligned allocator for memory management. Memory allocation is serialized using a mutex, as the allocator is not thread-safe.
+
+@var LogBuffer::allocator
+@brief Reference to an aligned allocator for allocating memory for log entries.
+@details Used to allocate memory with specified alignment for `LogEntry` objects. It is not thread-safe, so access to it is protected by a mutex.
+
+@var LogBuffer::queue
+@brief A lock-free queue for storing pointers to log entries.
+@details Implements thread-safe storage and retrieval of pointers to `LogEntry` objects. Uses a lock-free algorithm to minimize delays in a multithreaded environment.
+
+@var std::mutex
+@brief Mutex for serializing access to the allocator.
+@details Protects memory allocation operations, as the `AlignedAllocator` is not thread-safe. Used in the `log()` method to synchronize calls to `allocator.allocate()`.
+*/
