@@ -25,7 +25,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: docs_output/ru/html
-          config_file: docs_src/ru/config_ru
+          config_file: ./config_ru
           doxygen_version: 1.9.8
         env:
           PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
