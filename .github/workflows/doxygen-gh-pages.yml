@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  DOXYGEN_OUTPUT: docs_output/ru
+  PLANTUML_JAR: plantuml-1.2025.2.jar    
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,7 +20,7 @@ jobs:
         run: sudo apt-get install -y default-jre  
 
       - name: Download PlantUML JAR
-        run: wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar
+        run: wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/${{ env.PLANTUML_JAR }}
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y wget graphviz
@@ -25,12 +29,25 @@ jobs:
         run: sudo apt-get install -y doxygen
       
       - name: Create output directory
-        run: mkdir -p docs_output/ru/
+        run: mkdir -p ${{ env.DOXYGEN_OUTPUT }}
       
       - name: Create .nojekyll file
         run: |
-          mkdir -p docs_output/ru/html
-          touch docs_output/ru/html/.nojekyll
+          mkdir -p ${{ env.DOXYGEN_OUTPUT }}/html
+          touch ${{ env.DOXYGEN_OUTPUT }}/html/.nojekyll
 
       - name: Check folder structure
         run: ls -la
+      
+      - name: Generate Doxygen documentation
+        run: doxygen config_gh
+        env:
+          OUTPUT_DIR_ENV: ${{ env.DOXYGEN_OUTPUT }}
+          PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
+      
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: ${{ env.DOXYGEN_OUTPUT }}/html
