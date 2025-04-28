@@ -20,10 +20,12 @@ jobs:
         run: |
           echo "Current working directory:"
           pwd
-          echo "Creating docs_output directory..."
-          mkdir -p docs_output/
+          echo "Creating docs_output/ru directory..."
+          mkdir -p docs_output/ru
           echo "Directory contents after creation:"
           ls -la
+          echo "Contents of docs_output:"
+          ls -la docs_output/
 
       - name: Run Doxygen with PlantUML
         uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
