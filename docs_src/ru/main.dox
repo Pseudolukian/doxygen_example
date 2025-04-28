@@ -1,10 +1,4 @@
 /**
-@section Allocator Аллокатор памяти
-@include /home/pynan/allocator/docs_src/ru/Allocator/main.dox
-
-@section Lock free queue Неблокируемая очередь
-@include /home/pynan/allocator/docs_src/ru/Lock_free_queue/main.dox
-
 @section Logger Логгер
 @addtogroup Logger_Group
 */
