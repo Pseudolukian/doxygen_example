@@ -14,7 +14,7 @@
 Для более подробного понимания взаимодействия компонентов, пожалуйста, обратитесь к схеме PlantUML:
 
 @startuml
-!include /home/pynan/allocator/docs_src/ru/scheme.puml!0
+!include ./scheme.puml!0
 @enduml
 
 @subsection sec_1_1 Аллокатор памяти
