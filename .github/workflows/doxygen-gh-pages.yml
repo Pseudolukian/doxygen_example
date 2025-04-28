@@ -45,11 +45,14 @@ jobs:
           OUTPUT_DIR_ENV: ${{ env.DOXYGEN_OUTPUT }}
           PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
       
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Package and upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.GH_DOCS }}
-          branch: gh-pages
-          folder: ${{ env.DOXYGEN_OUTPUT }}/html
-          clean: true
-          force: true
+          path: ${{ env.DOXYGEN_OUTPUT }}/html
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
