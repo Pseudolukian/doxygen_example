@@ -17,13 +17,7 @@ jobs:
           wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar -O /home/runner/plantuml-1.2025.2.jar
 
       - name: Create output directory
-        run: mkdir -p docs_output/ru
-
-      - name: Debug directory structure
-        run: |
-          pwd
-          ls -R docs_output
-        working-directory: ${{ github.workspace }}
+        run: mkdir -p docs_output/ru/html
 
       - name: Run Doxygen with PlantUML
         uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
