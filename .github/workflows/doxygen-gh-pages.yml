@@ -26,6 +26,11 @@ jobs:
           ls -la /home/runner/work/${{ github.repository }}/docs_output/
           echo "Contents of docs_output/ru:"
           ls -la /home/runner/work/${{ github.repository }}/docs_output/ru/
+      
+      - name: Create .nojekyll file
+        run: |
+          mkdir -p /home/runner/work/${{ github.repository }}/docs_output/ru/html
+          touch /home/runner/work/${{ github.repository }}/docs_output/ru/html/.nojekyll
 
       - name: Run Doxygen with PlantUML
         uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
