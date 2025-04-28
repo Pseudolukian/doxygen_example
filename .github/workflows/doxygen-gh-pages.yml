@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+permissions:
+    id-token: write
+    pages: write
+    contents: read
+    pull-requests: write      
+
 env:
   DOXYGEN_OUTPUT: docs_output/ru
   PLANTUML_JAR: plantuml-1.2025.2.jar    
