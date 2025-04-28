@@ -25,4 +25,4 @@ jobs:
           config_file: ./config_ru
           doxygen_version: 1.9.8
         env:
-          PLANTUML_JAR_PATH: /home/runner/plantuml-1.2025.2.jar
+          PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
