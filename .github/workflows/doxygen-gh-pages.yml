@@ -35,6 +35,7 @@ jobs:
           folder: docs_output/ru/html
           config_file: ./config_gh
           doxygen_version: 1.9.8
+          generate_nojekyll: true
         env:
           PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
           OUTPUT_DIR_ENV: /home/runner/work/${{ github.repository }}/docs_output/ru/
