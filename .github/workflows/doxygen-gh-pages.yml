@@ -16,9 +16,9 @@ env:
   DOXYGEN_OUTPUT_RU: docs_output/ru
   DOXYGEN_OUTPUT_EN: docs_output/en
   PLANTUML_JAR: plantuml-1.2025.2.jar
-  INPUT_DIR: .docs_src
-  INPUT_DIR_RU: .docs_src/ru  
-  INPUT_DIR_EN: .docs_src/en
+  INPUT_DIR: docs_src
+  INPUT_DIR_RU: docs_src/ru  
+  INPUT_DIR_EN: docs_src/en
   LOCALE_EN: ENGLISH
   LOCALE_RU: RUSSIAN
 
