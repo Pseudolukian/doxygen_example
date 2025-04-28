@@ -11,13 +11,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Create output directory
-        run: mkdir -p docs_output/
 
       - name: Download PlantUML JAR
         run: |
           wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar -O /home/runner/plantuml-1.2025.2.jar
+
+      - name: Create output directory
+        run: mkdir -p docs_output/ru
+
+      - name: Debug directory structure
+        run: |
+          pwd
+          ls -R docs_output
+        working-directory: ${{ github.workspace }}
 
       - name: Run Doxygen with PlantUML
         uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
@@ -25,7 +31,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: docs_output/ru/html
-          config_file: ./config_ru
+          config_file: docs_src/ru/config_ru
           doxygen_version: 1.9.8
         env:
           PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
