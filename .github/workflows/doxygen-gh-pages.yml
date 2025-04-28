@@ -48,7 +48,7 @@ jobs:
       
       - name: Create .nojekyll files
         run: |
-          touch ${{ env.DOXYGEN_OUTPUT }}/html/.nojekyll
+          touch ${{ env.DOXYGEN_OUTPUT }}/.nojekyll
           touch ${{ env.DOXYGEN_OUTPUT_RU }}/html/.nojekyll
           touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
 
