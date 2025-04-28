@@ -1,6 +1,5 @@
 /**
-@ingroup AllocatorGroup
-@fn void AlignedAllocator::reset()
+@fn AlignedAllocator::reset()
 @brief Сбрасывает аллокатор в начальное состояние.
 
 @details

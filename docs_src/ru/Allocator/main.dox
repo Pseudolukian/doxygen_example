@@ -1,0 +1,7 @@
+/**
+@include class_AlignedAllacator.dox
+@include fn_AlignedAllocator.dox
+@include fn_allocate.dox
+@include fn_destructor_AlignedAllocator
+@include fn_reset.dox
+/*

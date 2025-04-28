@@ -1,6 +1,5 @@
 /**
-@ingroup Lock_free_queue_Group
-@fn LockFreeQueue::enqueue
+@fn LockFreeQueue::enqueue()
 @brief Добавляет указатель на элемент в очередь.
 
 @details

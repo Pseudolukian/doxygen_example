@@ -1,5 +1,4 @@
 /**
-@ingroup AllocatorGroup
 @fn AlignedAllocator::~AlignedAllocator()
 @brief Деструктор — освобождает пул памяти.
 

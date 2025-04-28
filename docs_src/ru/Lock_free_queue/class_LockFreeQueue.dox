@@ -1,5 +1,17 @@
 /**
-@ingroup Lock_free_queue_Group
 @class LockFreeQueue
 @tparam T Тип элементов, хранящихся в очереди.
 @brief Класс, реализующий неблокирующую очередь.
+
+@private
+@var LockFreeQueue::capacity
+Максимальное количество элементов в очереди.
+
+@var LockFreeQueue::allocator
+Аллокатор, используемый для выделения памяти под массив указателей на элементы типа `T`.
+
+@var LockFreeQueue::head
+Указатель на начало очереди.
+
+@var LockFreeQueue::tail
+Указатель на конец очереди.

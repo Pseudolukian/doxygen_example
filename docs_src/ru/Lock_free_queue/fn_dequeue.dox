@@ -1,6 +1,5 @@
 /**
-@ingroup Lock_free_queue_Group
-@fn LockFreeQueue::dequeue
+@fn LockFreeQueue::dequeue()
 @brief Извлекает указатель на элемент из начала очереди.
 
 @details

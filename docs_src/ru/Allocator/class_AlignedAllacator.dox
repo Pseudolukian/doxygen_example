@@ -1,5 +1,4 @@
 /**
-@ingroup AllocatorGroup
 @class AlignedAllocator
 @brief Пользовательский аллокатор памяти с поддержкой выровненного выделения памяти, безопасными границами и автоматическим управлением памятью.
 
@@ -13,6 +12,16 @@
 - **Методы** класса  `AlignedAllocator`:
       - @ref AlignedAllocator::allocate "allocate()" — выделение памяти; 
       - @ref AlignedAllocator::reset "reset()" — повторное использования пула и автоматическое освобождение памяти.
+
+@private
+@var AlignedAllocator::pool_size 
+Размер пула памяти в байтах.
+@var AlignedAllocator::alignment
+Выравнивание пула памяти в байтах.
+@var AlignedAllocator::base
+Указатель на начало пула памяти.
+@var AlignedAllocator::current
+Указатель на текущую позицию в пуле памяти.
 */
 
  

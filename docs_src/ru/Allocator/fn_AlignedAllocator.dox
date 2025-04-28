@@ -1,5 +1,4 @@
 /**
-@ingroup AllocatorGroup
 @fn AlignedAllocator::AlignedAllocator(std::size_t size, std::size_t alignment)
 @brief Конструктор аллокатора памяти.
 
@@ -22,8 +21,4 @@
 @param[in] size Общий размер пула памяти в байтах.
 @param[in] alignment Требуемое выравнивание (должно быть степенью двойки).
 @throw std::bad_alloc Исключение если выделение памяти не удалось.
-@var pool_size Размер пула памяти в байтах.
-@var alignment Выравнивание пула памяти в байтах.
-@var base Указатель на начало пула памяти.
-@var current Указатель на текущую позицию в пуле памяти.
 */

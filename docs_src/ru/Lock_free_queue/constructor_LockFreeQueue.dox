@@ -1,18 +1,19 @@
 /**
-@ingroup Lock_free_queue_Group
-@fn LockFreeQueue(std::size_t capacity, AlignedAllocator& allocator)
+@fn explicit LockFreeQueue::LockFreeQueue(std::size_t capacity, AlignedAllocator& allocator)
 @brief Конструктор класса, реализующий неблокирующую очередь.
 
 @details
 Конструктор инициализирует неблокирующую очередь, готовую принимать указатели на элементы типа `T` через метод `enqueue` и выдавать их через `dequeue`. Атомарные переменные `head` и `tail` обеспечивают безопасную работу в многопоточной среде без блокировок.
 
 Выделяется память под массив указателей `buffer` размером `capacity` с помощью аллокатора:
-@code{.cpp}
+
+@code
 buffer = reinterpret_cast<T**>(allocator.allocate(sizeof(T*) * capacity));
 @endcode
 
 Все элементы массива `buffer` инициализируются значением `nullptr`, обозначая пустую очередь:
-@code{.cpp}
+
+@code
 for (size_t i = 0; i < capacity; ++i) {
     buffer[i] = nullptr;
 }
@@ -20,8 +21,4 @@ for (size_t i = 0; i < capacity; ++i) {
 
 @param [in] capacity Размер очереди.
 @param [in] allocator Аллокатор для выделения памяти.
-@var LockFreeQueue::capacity Максимальное количество элементов в очереди.
-@var LockFreeQueue::allocator Аллокатор, используемый для выделения памяти под массив указателей на элементы типа `T`.
-@var LockFreeQueue::head Указатель на начало очереди.
-@var LockFreeQueue::tail Указатель на конец очереди.
 */

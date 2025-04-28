@@ -1334,7 +1334,7 @@ HTML_FOOTER            =
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET        = /home/pynan/allocator/docs_src/doxygen-awesome-css/doxygen-awesome.css
+HTML_STYLESHEET        =
                         
 
 # The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
