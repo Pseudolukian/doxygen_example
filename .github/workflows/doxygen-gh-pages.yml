@@ -11,36 +11,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Install Java
+        run: sudo apt-get install -y default-jre  
 
       - name: Download PlantUML JAR
-        run: |
-          wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar -O /home/runner/plantuml-1.2025.2.jar
+        run: wget https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar
 
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y wget graphviz
+  
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen
+      
       - name: Create output directory
-        run: |
-          echo "Current working directory:"
-          pwd
-          echo "Creating docs_output/ru directory..."
-          mkdir -p /home/runner/work/${{ github.repository }}/docs_output/ru
-          echo "Directory contents after creation:"
-          ls -la /home/runner/work/${{ github.repository }}/docs_output/
-          echo "Contents of docs_output/ru:"
-          ls -la /home/runner/work/${{ github.repository }}/docs_output/ru/
+        run: mkdir -p docs_output/ru/
       
       - name: Create .nojekyll file
         run: |
-          mkdir -p /home/runner/work/${{ github.repository }}/docs_output/ru/html
-          touch /home/runner/work/${{ github.repository }}/docs_output/ru/html/.nojekyll
+          mkdir -p docs_output/ru/html
+          touch docs_output/ru/html/.nojekyll
 
-      - name: Run Doxygen with PlantUML
-        uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs_output/ru/html
-          config_file: ./config_gh
-          doxygen_version: 1.9.8
-          generate_nojekyll: true
-        env:
-          PLANTUML_JAR_PATH_ENV: /home/runner/plantuml-1.2025.2.jar
-          OUTPUT_DIR_ENV: /home/runner/work/${{ github.repository }}/docs_output/ru/
+      - name: Check folder structure
+        run: ls -la
