@@ -16,6 +16,7 @@ env:
   DOXYGEN_OUTPUT_RU: docs_output/ru
   DOXYGEN_OUTPUT_EN: docs_output/en
   PLANTUML_JAR: plantuml-1.2025.2.jar
+  INPUT_DIR: .docs_src
   INPUT_DIR_RU: .docs_src/ru  
   INPUT_DIR_EN: .docs_src/en
   LOCALE_EN: ENGLISH
@@ -27,6 +28,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create output directories
+        run: |
+          mkdir -p ${{ env.DOXYGEN_OUTPUT_RU }}/html
+          mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}/html
+      
+      - name: Create .nojekyll files
+        run: |
+          touch ${{ env.DOXYGEN_OUTPUT }}/.nojekyll
+          touch ${{ env.DOXYGEN_OUTPUT_RU }}/html/.nojekyll
+          touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
+
+      - name: CP index.html for language selection
+        run: cp ${{ env.INPUT_DIR}}/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
       
       - name: Install Java
         run: sudo apt-get install -y default-jre  
@@ -39,26 +54,6 @@ jobs:
   
       - name: Install Doxygen
         run: sudo apt-get install -y doxygen
-      
-      
-      - name: Create output directories
-        run: |
-          mkdir -p ${{ env.DOXYGEN_OUTPUT_RU }}/html
-          mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}/html
-      
-      - name: Create .nojekyll files
-        run: |
-          touch ${{ env.DOXYGEN_OUTPUT }}/.nojekyll
-          touch ${{ env.DOXYGEN_OUTPUT_RU }}/html/.nojekyll
-          touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
-
-      - name: Create output directory EN
-        run: mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}  
-        
-      - name: Create .nojekyll file for RU
-        run: |
-          mkdir -p ${{ env.DOXYGEN_OUTPUT_EN }}/html
-          touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
       
       - name: Generate Doxygen RU documentation
         run: doxygen config_gh
@@ -76,27 +71,13 @@ jobs:
           INPUT_DIR: ${{ env.INPUT_DIR_EN }}
           LOCALE: ${{ env.LOCALE_EN }}
       
-      - name: Create index.html for language selection
-        run: |
-          cat > ${{ env.DOXYGEN_OUTPUT }}/index.html <<EOF
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <meta http-equiv="refresh" content="0; url=/doxygen/ru/" />
-          </head>
-          <body>
-              <p>Redirecting to Russian documentation...</p>
-          </body>
-          </html>
-          EOF     
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Package and upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.DOXYGEN_OUTPUT }}/html
+          path: ${{ env.DOXYGEN_OUTPUT }}/
 
       - name: Deploy to GitHub Pages
         id: deployment
