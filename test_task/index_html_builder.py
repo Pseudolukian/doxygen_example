@@ -3,13 +3,13 @@ import os
 
 # Словарь с соответствием секций и Markdown-файлов
 content = {
-    "Documentation": "logger.md",
-    "Test_task": "gala_dinner.md",
-    "Dev_doc_proc": "work_process_ru.md"
+    "Documentation": "test_task/logger.md",
+    "Test_task": "test_task/gala_dinner.md",
+    "Dev_doc_proc": "test_task/work_process_ru.md"
 }
 
-html_template_path = "index_template.html"
-output_html_file = "index.html"
+html_template_path = "test_task/index_template.html"
+output_html_file = "test_task/index.html"
 
 # Чтение HTML-шаблона
 with open(html_template_path, 'r', encoding='utf-8') as template_file:
