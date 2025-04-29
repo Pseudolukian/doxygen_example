@@ -52,7 +52,10 @@ jobs:
         run: python3 test_task/index_html_builder.py
       
       - name: CP index.html
-        run: cp test_task/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
+        run: | 
+          cp test_task/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
+          cp test_task/main.css ${{ env.DOXYGEN_OUTPUT }}/main.css
+          cp test_task/diagram.svg ${{ env.DOXYGEN_OUTPUT }}/diagram.svg
       
       - name: Install Java
         run: sudo apt-get install -y default-jre  
