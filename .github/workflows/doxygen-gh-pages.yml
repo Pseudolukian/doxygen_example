@@ -21,6 +21,8 @@ env:
   INPUT_DIR_EN: docs_src/en
   LOCALE_EN: ENGLISH
   LOCALE_RU: RUSSIAN
+  PROJECT_NAME_RU: "Высокопроизводительный логгер"
+  PROJECT_NAME_EN: "High-performance logger"
 
 jobs:
   deploy:
@@ -40,8 +42,17 @@ jobs:
           touch ${{ env.DOXYGEN_OUTPUT_RU }}/html/.nojekyll
           touch ${{ env.DOXYGEN_OUTPUT_EN }}/html/.nojekyll
 
-      - name: CP index.html for language selection
-        run: cp ${{ env.INPUT_DIR}}/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
+      - name: Install Python
+        run: sudo apt-get install -y python3 python3-pip
+      
+      - name: Install markdown2
+        run: pip3 install markdown2
+
+      - name: Convert README.md to HTML
+        run: python3 ./test_task/index_html_builder.py
+      
+      - name: CP index.html
+        run: cp ./test_task/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
       
       - name: Install Java
         run: sudo apt-get install -y default-jre  
@@ -62,6 +73,7 @@ jobs:
           PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
           INPUT_DIR: ${{ env.INPUT_DIR_RU }}
           LOCALE: ${{ env.LOCALE_RU }}
+          PROJECT_NAME: ${{ env.PROJECT_NAME_RU }}
       
       - name: Generate Doxygen EN documentation
         run: doxygen config_gh
@@ -70,6 +82,7 @@ jobs:
           PLANTUML_JAR_PATH_ENV: ${{ env.PLANTUML_JAR }}
           INPUT_DIR: ${{ env.INPUT_DIR_EN }}
           LOCALE: ${{ env.LOCALE_EN }}
+          PROJECT_NAME: ${{ env.PROJECT_NAME_EN }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
