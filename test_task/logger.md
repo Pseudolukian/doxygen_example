@@ -4,5 +4,5 @@
 
 Ознакомиться с документацией можно по ссылкам:
 
-- [EN](/doxygen_example/en/html/) версия документации.
-- [RU](/doxygen_example/ru/html/) версия документации.
+- <a href="/doxygen_example/en/html/" target="_blank">EN</a> версия документации.
+- <a href="/doxygen_example/ru/html/" target="_blank">RU</a> версия документации.
