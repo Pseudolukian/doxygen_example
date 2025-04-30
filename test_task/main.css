@@ -43,3 +43,20 @@ img {
     display: block; /* Убирает лишние отступы */
     margin: 10px 0; /* Добавляет отступы сверху и снизу */
 }
+
+
+table {
+    border-collapse: collapse;
+}
+  
+th {
+    font-weight: bold;
+    background-color: #d3d3d3;
+    text-align: center;
+    padding: 8px;
+}
+
+td {
+    text-align: center;
+    padding: 8px;
+}
