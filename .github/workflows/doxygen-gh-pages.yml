@@ -56,6 +56,7 @@ jobs:
           cp test_task/index.html ${{ env.DOXYGEN_OUTPUT }}/index.html
           cp test_task/main.css ${{ env.DOXYGEN_OUTPUT }}/main.css
           cp test_task/diagram.svg ${{ env.DOXYGEN_OUTPUT }}/diagram.svg
+          cp test_task/gala_dinner.svg ${{ env.DOXYGEN_OUTPUT }}/gala_dinner.svg
       
       - name: Install Java
         run: sudo apt-get install -y default-jre  
